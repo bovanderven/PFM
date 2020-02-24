@@ -1,0 +1,179 @@
+package assignment3;
+
+import java.io.*;
+import java.util.*;
+
+public class A3_452355 {
+	static Scanner userInput1 = new Scanner(System.in);
+	static Scanner userInput2 = new Scanner(System.in);
+	static Scanner userInput3 = new Scanner(System.in);
+
+	public static void main(String[] args) {
+		
+		int userChoice = getUserChoice(); 
+		switch (userChoice) {
+		case 1:
+			newEntry();
+			break; 
+		case 2:
+			viewGrades();
+			break; 
+		case 3:
+			adjustGrade();
+			break;
+		case 4:
+			finalResult();
+			break; 
+			}
+	}
+	
+	// This method asks and returns what the user wants to do
+	public static int getUserChoice(){ 
+	System.out.println("**********************");
+	System.out.println("**********************");
+	System.out.println("**** PFM ****"); 
+	System.out.println("**********************");
+	System.out.println("**********************");
+	System.out.println("");
+	System.out.println("What do you want to do?");
+	System.out.println("(1) Enter grades");
+	System.out.println("(2) View grades");
+	System.out.println("(3) Adjust grades");
+	System.out.println("(4) Finalized results"); 
+	System.out.println("**********************"); 
+	System.out.print("Please enter your choice (1, 2, 3, or 4): ");
+	return userInput1.nextInt();
+	
+	}
+	
+	// This method adds new entries at the end of the file
+	public static void newEntry(){
+		System.out.println("How many entries would you like to append to the file?");
+		int noOfNewEntries = userInput1.nextInt();
+		for (int i = 0; i < noOfNewEntries; i++) {
+			System.out.print("Enter studentnumber: ");
+			int studentNumber = userInput2.nextInt();
+			System.out.print("Enter grade: ");
+			double studentGrade = userInput3.nextDouble();
+			String line = studentNumber + "\t" + studentGrade;
+			appendFile(line);
+		}
+		
+	}
+	
+	// This method prints out the content of the file in the console
+	public static void viewGrades(){
+		int[] studentNumber = readStNumber();
+		double[] studentGrade = readStGrade();
+		System.out.println("Studentnumber \tGrade");
+		for (int i = 0; i < studentNumber.length - 1; i++) {
+				System.out.println(studentNumber[i] + "\t\t" + studentGrade[i]);
+		}
+	
+	}	
+	
+	// This method adjusts the grade of one student
+	public static void adjustGrade(){
+		int[] studentNumber = readStNumber();
+		double[] studentGrade = readStGrade();
+		System.out.println("Studentnumber \tGrade");
+		for (int i = 0; i < studentNumber.length - 1; i++) {
+				System.out.println(studentNumber[i] + "\t\t" + studentGrade[i]);	
+		}
+		System.out.println("What is the student number of the student with grade adjustment?");
+		int studentNumberAdjust = userInput2.nextInt();
+		System.out.println("What is the new grade?");
+		double studentGradeAdjust = userInput3.nextDouble();
+		
+		int index = 0;
+		for (int i = 0; i < studentNumber.length - 1; i++) {
+			if(studentNumber[i] == studentNumberAdjust) {
+				index = i;
+			}
+		}
+		
+		studentGrade[index] = studentGradeAdjust;
+		
+		//overwrite????
+		
+		
+	}
+	
+	// This method adds one column (pass or fail) to the file for each student
+	public static void finalResult(){
+		// fill in the blank following the steps in V
+	}
+	
+	// This method reads the file and returns all student numbers (first column)
+	public static int[] readStNumber(){
+		
+		int[] studentNumber = new int[10];
+		int lineNumber = 0;
+		String sCurrentLine;
+		
+		try {
+			BufferedReader myFile = new BufferedReader (new FileReader("pfm.txt"));
+			while((sCurrentLine = myFile.readLine()) != null) {
+				
+				String stringNumber = sCurrentLine.substring(0, 6);
+				studentNumber[lineNumber] = Integer.parseInt(stringNumber);
+				lineNumber++;
+			
+			}
+			myFile.close();
+			
+		} catch (IOException e){
+			System.out.println("The file does not exist!");
+		}
+		return studentNumber;
+	
+	}
+	// This method reads the file and returns all students' grades (second column)
+	public static double[] readStGrade(){ 
+		double[] studentGrade = new double [10];
+		int lineNumber = 0;
+		String sCurrentLine;
+		
+		try {
+			BufferedReader myFile = new BufferedReader (new FileReader("pfm.txt"));
+			while((sCurrentLine = myFile.readLine()) != null) {
+				
+				String stringGrade = sCurrentLine.substring(6);
+				studentGrade[lineNumber] = Double.parseDouble(stringGrade);
+				lineNumber++;
+			}
+			myFile.close();
+			
+		} catch (IOException e){
+			System.out.println("The file does not exist!");
+			
+		}
+		return studentGrade;
+	}
+	
+	// This method adds a new entry to the file
+	public static void appendFile(String line){ 
+		
+		try {
+			PrintWriter myFile = new PrintWriter (new BufferedWriter (new FileWriter ("pfm.txt", true)));
+			myFile.println(line);
+			myFile.close();
+		} catch(IOException e) {
+			System.out.print("There is an I/O problem!");
+		}
+	
+	}
+	// This method erases the previous contents and writes new entries to the file
+	public static void overWriteFile(String[] myArray){ 
+	
+		try{
+			PrintWriter myFile = new PrintWriter (new BufferedWriter ( new FileWriter ("pfm.txt", false)));
+			for (int i = 0; i < myArray.length; i++) myFile.println(myArray[i]);
+			myFile.close();
+		} catch(IOException e){
+			System.out.print("There is an I/O problem!");
+		} 
+
+	}
+
+}

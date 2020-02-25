@@ -1,179 +1,162 @@
-package assignment3;
+package group_project;
 
 import java.io.*;
 import java.util.*;
 
-public class A3_452355 {
-	static Scanner userInput1 = new Scanner(System.in);
-	static Scanner userInput2 = new Scanner(System.in);
-	static Scanner userInput3 = new Scanner(System.in);
-
-	public static void main(String[] args) {
-		
-		int userChoice = getUserChoice(); 
-		switch (userChoice) {
-		case 1:
-			newEntry();
-			break; 
-		case 2:
-			viewGrades();
-			break; 
-		case 3:
-			adjustGrade();
-			break;
-		case 4:
-			finalResult();
-			break; 
-			}
-	}
+public class Group_project {
 	
-	// This method asks and returns what the user wants to do
-	public static int getUserChoice(){ 
-	System.out.println("**********************");
-	System.out.println("**********************");
-	System.out.println("**** PFM ****"); 
-	System.out.println("**********************");
-	System.out.println("**********************");
-	System.out.println("");
-	System.out.println("What do you want to do?");
-	System.out.println("(1) Enter grades");
-	System.out.println("(2) View grades");
-	System.out.println("(3) Adjust grades");
-	System.out.println("(4) Finalized results"); 
-	System.out.println("**********************"); 
-	System.out.print("Please enter your choice (1, 2, 3, or 4): ");
-	return userInput1.nextInt();
+	static Scanner userInputString = new Scanner(System.in);
+	static Scanner userInputChar = new Scanner(System.in);
+	static Scanner userInputInteger = new Scanner(System.in);
+	static Scanner userInputDouble = new Scanner(System.in);
 	
-	}
 	
-	// This method adds new entries at the end of the file
-	public static void newEntry(){
-		System.out.println("How many entries would you like to append to the file?");
-		int noOfNewEntries = userInput1.nextInt();
-		for (int i = 0; i < noOfNewEntries; i++) {
-			System.out.print("Enter studentnumber: ");
-			int studentNumber = userInput2.nextInt();
-			System.out.print("Enter grade: ");
-			double studentGrade = userInput3.nextDouble();
-			String line = studentNumber + "\t" + studentGrade;
-			appendFile(line);
-		}
-		
-	}
-	
-	// This method prints out the content of the file in the console
-	public static void viewGrades(){
-		int[] studentNumber = readStNumber();
-		double[] studentGrade = readStGrade();
-		System.out.println("Studentnumber \tGrade");
-		for (int i = 0; i < studentNumber.length - 1; i++) {
-				System.out.println(studentNumber[i] + "\t\t" + studentGrade[i]);
-		}
-	
-	}	
-	
-	// This method adjusts the grade of one student
-	public static void adjustGrade(){
-		int[] studentNumber = readStNumber();
-		double[] studentGrade = readStGrade();
-		System.out.println("Studentnumber \tGrade");
-		for (int i = 0; i < studentNumber.length - 1; i++) {
-				System.out.println(studentNumber[i] + "\t\t" + studentGrade[i]);	
-		}
-		System.out.println("What is the student number of the student with grade adjustment?");
-		int studentNumberAdjust = userInput2.nextInt();
-		System.out.println("What is the new grade?");
-		double studentGradeAdjust = userInput3.nextDouble();
-		
-		int index = 0;
-		for (int i = 0; i < studentNumber.length - 1; i++) {
-			if(studentNumber[i] == studentNumberAdjust) {
-				index = i;
-			}
-		}
-		
-		studentGrade[index] = studentGradeAdjust;
-		
-		//overwrite????
-		
-		
-	}
-	
-	// This method adds one column (pass or fail) to the file for each student
-	public static void finalResult(){
-		// fill in the blank following the steps in V
-	}
-	
-	// This method reads the file and returns all student numbers (first column)
-	public static int[] readStNumber(){
-		
-		int[] studentNumber = new int[10];
-		int lineNumber = 0;
-		String sCurrentLine;
-		
-		try {
-			BufferedReader myFile = new BufferedReader (new FileReader("pfm.txt"));
-			while((sCurrentLine = myFile.readLine()) != null) {
-				
-				String stringNumber = sCurrentLine.substring(0, 6);
-				studentNumber[lineNumber] = Integer.parseInt(stringNumber);
-				lineNumber++;
-			
-			}
-			myFile.close();
-			
-		} catch (IOException e){
-			System.out.println("The file does not exist!");
-		}
-		return studentNumber;
-	
-	}
-	// This method reads the file and returns all students' grades (second column)
-	public static double[] readStGrade(){ 
-		double[] studentGrade = new double [10];
-		int lineNumber = 0;
-		String sCurrentLine;
-		
-		try {
-			BufferedReader myFile = new BufferedReader (new FileReader("pfm.txt"));
-			while((sCurrentLine = myFile.readLine()) != null) {
-				
-				String stringGrade = sCurrentLine.substring(6);
-				studentGrade[lineNumber] = Double.parseDouble(stringGrade);
-				lineNumber++;
-			}
-			myFile.close();
-			
-		} catch (IOException e){
-			System.out.println("The file does not exist!");
-			
-		}
-		return studentGrade;
-	}
-	
-	// This method adds a new entry to the file
 	public static void appendFile(String line){ 
 		
-		try {
-			PrintWriter myFile = new PrintWriter (new BufferedWriter (new FileWriter ("pfm.txt", true)));
-			myFile.println(line);
-			myFile.close();
-		} catch(IOException e) {
+		
+		try {																								
+			PrintWriter myFile = new PrintWriter (new BufferedWriter (new FileWriter ("users.txt", true)));	
+			myFile.println(line);																			
+			myFile.close();																					
+			
+		} catch(IOException e) {																			
 			System.out.print("There is an I/O problem!");
 		}
 	
 	}
-	// This method erases the previous contents and writes new entries to the file
-	public static void overWriteFile(String[] myArray){ 
 	
-		try{
-			PrintWriter myFile = new PrintWriter (new BufferedWriter ( new FileWriter ("pfm.txt", false)));
-			for (int i = 0; i < myArray.length; i++) myFile.println(myArray[i]);
-			myFile.close();
-		} catch(IOException e){
-			System.out.print("There is an I/O problem!");
-		} 
 
+	public static void main(String[] args) {
+
+		
+		// voor elke string moet nog private! private final kan volgens mij alleen in de public class
+		
+		System.out.println("Welcome to Hotel Booking PFM!");
+		System.out.println("Do you already have an account?");
+		
+		String userAnswer = userInputString.nextLine();	
+		
+		if (userAnswer.equals("yes")) {
+			System.out.println("Please continue to user login.");
+		}
+		else if (userAnswer.equals("no")) {
+			System.out.println("Create account");
+			
+			System.out.println("First name: ");
+			String firstName = userInputString.nextLine();
+			String firstNameLine = "First name:      " + firstName;
+			appendFile(firstNameLine);
+			
+			System.out.println("Last name: ");
+			String lastName = userInputString.nextLine();
+			String lastNameLine = "Last name:       " + lastName;
+			appendFile(lastNameLine);
+			
+			System.out.println("Gender (F = Female, M = Male, O = Other: ");
+			String gender = userInputString.nextLine(); //misschien veranderen naar char?
+			String genderLine = "Gender:          " + gender;
+			appendFile(genderLine);
+			
+			System.out.println("Date of birth (data/month/year): "); 
+			String dateOfBirth = userInputString.nextLine(); //of moet het int zijn ipv string? 
+			String dateOfBirthLine = "Date of birth:   " + dateOfBirth;
+			appendFile(dateOfBirthLine);
+			
+			System.out.println("Address (Streetname + number, City, Postal code: "); //of doen we elke van deze onderdelen van een address apart appenden?
+			String address = userInputString.nextLine();
+			String addressLine = "Address:         " + address;
+			appendFile(addressLine);
+			
+			System.out.println("Email: ");
+			String email = userInputString.nextLine();
+			String emailLine = "Email:           " + email;
+			appendFile(emailLine);
+			
+			System.out.println("Phone: ");
+			String phone = userInputString.nextLine();
+			String phoneLine = "Phone:           " + phone;
+			appendFile(phoneLine);
+			
+			System.out.println("Username: ");
+			final String username = userInputString.nextLine(); 
+			String usernameLine = "Username:        " + username;
+			appendFile(usernameLine);
+			
+			System.out.println("Password: ");
+			final String password = userInputString.nextLine(); 
+			String passwordLine = "Password:        " + password;
+			appendFile(passwordLine);
+			
+			
+		}
 	}
 
+	// account login
+	
+	
+	public void Login(String username, String password) {
+	
+	
+	while(true);{
+		System.out.println("Enter username: ");
+		String username = userInputString.nextLine();
+		
+		System.out.println("Enter password: ");
+		String password = userInputString.nextLine();
+	
+		if (username.equals(this.username) && password.equals(this.password)) {
+			System.out.println("Login succesful.");
+			break;
+		}	
+		else {
+			System.out.println("Incorrect username/password.");
+		}
+	
+	
+		
+	}
+	}
 }
+
+
+	// user details
+	
+		
+	  private String firstname;
+	  private String lastname;
+	  private String email;
+	  private String address;
+	  private int phonenumber;
+	 
+	  }
+	  public String getFirstname() {
+	  return firstname;
+	  }
+	  public void setFirstname(String firstname) {
+	  this.firstname = firstname;
+	  }
+	  public String getLastname() {
+	  return lastname;
+	  }
+	  public void setLastname(String lastname) {
+	  this.lastname = lastname;
+	  }
+	  public String getEmail() {
+	  return email;
+	  }
+	  public void setEmail(String email) {
+	  this.email = email;
+	  }
+	  public String getAddress() {
+	  return address;
+	  }
+	  public void setAddress(String address) {
+	  this.address = address;
+	  }
+	  public int getPhoneNumber() {
+	  return phone;
+	  }
+	  public void setPhoneNumber(int phone) {
+	  this.phone = phone;
+	  }
+	}
